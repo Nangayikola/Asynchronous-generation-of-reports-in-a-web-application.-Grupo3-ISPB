@@ -6,8 +6,8 @@ from time import sleep
 
 @shared_task
 def gerar_relatorio_async():
-    # Simulação de geração de relatório (substitua com sua lógica real)
+    # Simulação de geração de relatório (Substituir pela lógica real)
     sleep(10)  # Simula uma operação de longa duração
-    # Código para gerar o relatório aqui
+    
 
     return 'Relatório gerado com sucesso'
