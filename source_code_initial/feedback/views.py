@@ -4,6 +4,8 @@ from django.views.generic.edit import FormView
 from django.shortcuts import render
 from .tasks import gerar_relatorio_async
 
+from django.http import JsonResponse
+
 from feedback.forms import FeedbackForm
 
 
@@ -25,6 +27,20 @@ def gerar_relatorio(request):
         return render(request, 'report.html', context)
     else:
         return render(request, 'index.html')
+    
+def long_polling_view(request):
+    if request.method == 'POST':
+        # Lógica para processar os dados recebidos na solicitação de long polling
+        # Execute qualquer ação necessária e prepare a resposta
+        
+        # Exemplo de resposta
+        data = {
+            'status': 'success',
+            'message': 'Dados recebidos e processados com sucesso.'
+        }
+        
+        # Retorne a resposta em formato JSON
+        return JsonResponse(data)
 
 
 class SuccessView(TemplateView):

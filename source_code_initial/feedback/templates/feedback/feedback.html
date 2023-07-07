@@ -1,15 +1,50 @@
 {% extends 'feedback/base.html' %}
 
-{% block content %}
-
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Título da Página</title>
+</head>
+<body>
+    {% block content %}
     <h1>Olá! Como vai?</h1>
     
     <p>Por favor envie-nos o seu feedback.</p>
 
-    <form method="post">
+    <form method="post" id="my-form">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit"/>
     </form>
+    <a href="https://htmx.org/">Estuda AJAX</a>
+    {% endblock content %}
 
-{% endblock content %}
+    <script>
+        // Função para enviar a solicitação de long polling
+        function longPolling() {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'long_polling_endpoint' %}",  // Substitua 'long_polling_endpoint' pela URL da sua view de long polling
+                data: $('#my-form').serialize(),  // Serialize o formulário para enviar os dados
+                success: function(data) {
+                    // Lógica para manipular a resposta recebida
+                    // Atualize a interface do usuário com os dados recebidos
+                    // Chame longPolling() novamente para estabelecer uma nova solicitação de long polling
+                    longPolling();
+                },
+                error: function(xhr, status, error) {
+                    // Lógica para lidar com erros, se necessário
+                }
+            });
+        }
+    
+        // Chame a função de long polling quando a página for carregada
+        $(document).ready(function() {
+            longPolling();
+        });
+    </script>
+  <footer>
+    <p>&copy; 2023 Meu Site. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
