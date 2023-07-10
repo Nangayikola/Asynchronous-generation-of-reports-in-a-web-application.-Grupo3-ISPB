@@ -10,13 +10,4 @@ class FeedbackForm(forms.Form):
         label="Message", widget=forms.Textarea(attrs={"rows": 5})
     )
 
-    def send_email(self):
-        """Sends an email when the feedback form has been submitted."""
-          # Simulate expensive operation that freezes Django
-        send_mail(
-            "Your Feedback",
-            f"\t{self.cleaned_data['message']}\n\nThank you!",
-            "support@example.com",
-            [self.cleaned_data["email"]],
-            fail_silently=False,
-        )
+

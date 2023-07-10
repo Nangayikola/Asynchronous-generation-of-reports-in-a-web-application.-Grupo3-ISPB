@@ -11,20 +11,37 @@
     
     <p>Por favor envie-nos o seu feedback.</p>
 
-    <form method="post" id="my-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit"/>
-    </form>
-    <a href="https://htmx.org/">Estuda AJAX</a>
-    {% endblock content %}
+    <button id="report"> Gerar Relatório </button>
+    
+    
+    
 
     <script>
+        const button = document.querySelector("#report");
+        console.log("Sucesso")
+        button.addEventListener("click", (event) => {
+            
+        fetch("{% url 'gerar_relatorio' %}", {
+                method: 'GET' 
+            })
+            .then(response => response.json())
+            .then(data => {
+               
+                console.log(data);
+            })
+            .catch(error => {
+                
+                console.log(err)
+            });
+        });
+
+        
+
         // Função para enviar a solicitação de long polling
-        function longPolling() {
+       /* function longPolling() {
             $.ajax({
                 type: "POST",
-                url: "{% url 'long_polling_endpoint' %}",  // Substitua 'long_polling_endpoint' pela URL da sua view de long polling
+            //      // Substitua 'long_polling_endpoint' pela URL da sua view de long polling
                 data: $('#my-form').serialize(),  // Serialize o formulário para enviar os dados
                 success: function(data) {
                     // Lógica para manipular a resposta recebida
@@ -41,8 +58,10 @@
         // Chame a função de long polling quando a página for carregada
         $(document).ready(function() {
             longPolling();
-        });
+        });*/
     </script>
+
+    {% endblock content %}
   <footer>
     <p>&copy; 2023 Meu Site. Todos os direitos reservados.</p>
   </footer>

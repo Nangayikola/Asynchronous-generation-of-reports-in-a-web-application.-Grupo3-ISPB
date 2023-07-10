@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
-
+from django.urls import reverse
 from django.shortcuts import render
 from .tasks import gerar_relatorio_async
 
@@ -12,7 +12,9 @@ from feedback.forms import FeedbackForm
 class FeedbackFormView(FormView):
     template_name = "feedback/feedback.html"
     form_class = FeedbackForm
-    success_url = "/success/"
+
+    def get_success_url(self) -> str:
+        return super().get_success_url()
 
     def form_valid(self, form):
         form.send_email()
